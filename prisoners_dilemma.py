@@ -336,7 +336,7 @@ def get_action(player, history, opponent_history, score, opponent_score, getting
             # use history, opponent_history, score, opponent_score
             # to compute your strategy      
             if len(opponent_history)==0: #It's the first round: collude
-                return 'c'
+                return 'b'
             else:
                 # if there was a previous round just like the last one,
                 # do whatever they did in the round that followed it
@@ -352,10 +352,16 @@ def get_action(player, history, opponent_history, score, opponent_score, getting
                             (prior_round_opponent == recent_round_opponent):
                         return opponent_history[round]
                 # no match found
-                if history[-1]=='c' and opponent_history[-1]=='b':
+                if history[-1]=='b' and opponent_history[-1]=='c':
                     return 'b' # betray is they were severely punished last time
                 else:
                     return 'c' #otherwise collude
+                if history[-1]=='c' and opponent_history[-1]=='c':
+                    return 'b' # betray is they were severely punished last time
+                else:
+                    return 'c' #otherwise collude
+                if(size%7==0): #the number of rounds played is a multiple of 3
+                    return 'b'
 
 
 
